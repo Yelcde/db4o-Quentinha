@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3299a1d-d2fa-4092-9f75-e1e035ce5a8d" name="Changes" comment="" />
+    <list default="true" id="a3299a1d-d2fa-4092-9f75-e1e035ce5a8d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/appconsole/Cadastrar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/appconsole/Cadastrar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/daodb4o/DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/daodb4o/DAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/daodb4o/DAOCliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/daodb4o/DAOCliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modelo/Pedido.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/modelo/Pedido.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,6 +18,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/appconsole/Cadastrar.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -35,12 +44,31 @@
   }
 }</component>
   <component name="RunManager">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <module name="db4o-Quentinha" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="GroovyScriptRunConfiguration" factoryName="Groovy">
       <setting name="path" value="" />
       <setting name="vmparams" value="" />
       <setting name="params" value="" />
       <setting name="workDir" value="" />
       <setting name="debug" value="false" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="db4o-Quentinha" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="db4o-Quentinha" />
+      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>

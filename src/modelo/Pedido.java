@@ -1,7 +1,7 @@
 package modelo;
 
 public class Pedido {
-	private int id;			//autogerado no daoaluguel
+	private int id;			//autogerado no daopedido
 	private Cliente cliente;
 	private Quentinha quentinha;
 	private String tamanho;
@@ -29,7 +29,6 @@ public class Pedido {
 		} else {
 			this.valorPago = quentinha.getPreco();
 		}
-
 	}
 
 	public int getId() {
