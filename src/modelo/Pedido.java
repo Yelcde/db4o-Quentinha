@@ -16,19 +16,6 @@ public class Pedido {
 		this.quentinha = quentinha;
 		this.tamanho = tamanho;
 		this.data = data;
-		
-//		LocalDate data = LocalDate.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		String perfil = cliente.getPerfil();
-		
-		if (perfil.equalsIgnoreCase("ouro")) {
-			this.valorPago = quentinha.getPreco() - (quentinha.getPreco() * 0.25);
-		} else if (perfil.equalsIgnoreCase("prata")) {
-			this.valorPago = quentinha.getPreco() - (quentinha.getPreco() * 0.15);
-		} else if (perfil.equalsIgnoreCase("bronze")) {
-			this.valorPago = quentinha.getPreco() - (quentinha.getPreco() * 0.05);
-		} else {
-			this.valorPago = quentinha.getPreco();
-		}
 	}
 
 	public int getId() {
@@ -79,6 +66,9 @@ public class Pedido {
 		this.valorPago = valorPago;
 	}
 
-	
-
+	@Override
+	public String toString() {
+		return "Pedido [id=" + id + ", cliente=" + cliente.getNome() + ", quentinha=" + quentinha.getDescricao() + ", tamanho=" + tamanho
+				+ ", data=" + data + ", valorPago=" + valorPago + "]";
+	}
 }

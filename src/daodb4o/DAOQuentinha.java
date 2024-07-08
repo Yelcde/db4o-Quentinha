@@ -8,6 +8,8 @@ package daodb4o;
 
 import java.util.List;
 import com.db4o.query.Query;
+
+import modelo.Pedido;
 import modelo.Quentinha;
 
 public class DAOQuentinha extends DAO<Quentinha> {
@@ -16,12 +18,19 @@ public class DAOQuentinha extends DAO<Quentinha> {
 		
 		Query q = manager.query();
 		q.constrain(Quentinha.class);
-		q.descend("placa").constrain(descricao);
+		q.descend("descricao").constrain(descricao);
 		List<Quentinha> resultados = q.execute();
 		
 		if (resultados.size()>0) return resultados.get(0);
 		
 		return null;
+	}
+	
+	// metodo sobrescrito da classe DAO para criar "id" sequencial 
+	public void create(Quentinha obj) {
+		int novoid = super.gerarId();  	//gerar novo id da classe
+		obj.setId(novoid);				//atualizar id do objeto antes de grava-lo no banco
+		manager.store(obj);
 	}
 	
     //--------------------------------------------

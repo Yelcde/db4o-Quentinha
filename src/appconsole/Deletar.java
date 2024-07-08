@@ -7,7 +7,6 @@
 
 package appconsole;
 
-
 import regras_negocio.Fachada;
 
 public class Deletar {
@@ -15,8 +14,8 @@ public class Deletar {
 	public Deletar() {
 		try {
 			Fachada.inicializar();
-			Fachada.excluirCarro("BBB2000");		 
-			System.out.println("carro deletado BBB2000");
+			Fachada.excluirPedido(1);		 
+			System.out.println("Pedido 1 deletado");
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

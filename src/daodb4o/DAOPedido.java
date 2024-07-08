@@ -11,7 +11,7 @@ import com.db4o.query.Query;
 import modelo.Pedido;
 
 public class DAOPedido extends DAO<Pedido> {
-	public Pedido read (Object chave){
+	public Pedido read (Object chave) {
 		int id = (int) chave;
 		
 		Query q = manager.query();
@@ -25,7 +25,7 @@ public class DAOPedido extends DAO<Pedido> {
 	}
 
 	// metodo sobrescrito da classe DAO para criar "id" sequencial 
-	public void create(Pedido obj){
+	public void create(Pedido obj) {
 		int novoid = super.gerarId();  	//gerar novo id da classe
 		obj.setId(novoid);				//atualizar id do objeto antes de grava-lo no banco
 		manager.store(obj);

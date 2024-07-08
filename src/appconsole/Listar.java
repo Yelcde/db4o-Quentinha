@@ -13,7 +13,6 @@ import modelo.Cliente;
 import regras_negocio.Fachada;
 
 public class Listar {
-
 	public Listar() {
 		try {
 			Fachada.inicializar();
@@ -21,6 +20,16 @@ public class Listar {
 			System.out.println("\n---listagem de clientes:");
 			for(Cliente c: Fachada.listarClientes()) {
 				System.out.println(c);
+			}
+			
+			System.out.println("\n---listagem de quentinhas:");
+			for(Quentinha q: Fachada.listarQuentinhas()) {
+				System.out.println(q);
+			}
+			
+			System.out.println("\n---listagem de pedidos:");
+			for(Pedido p: Fachada.listarPedidos()) {
+				System.out.println(p);
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
