@@ -7,6 +7,7 @@
 
 package appconsole;
 
+import modelo.Cliente;
 import modelo.Pedido;
 import modelo.Quentinha;
 import regras_negocio.Fachada;
@@ -18,22 +19,19 @@ public class Consultar {
 			Fachada.inicializar();
 
 			System.out.println("consultas... \n");
-			System.out.println("\nalugueis de carro palio");
-			for(Pedido a : Fachada.alugueisModelo("palio"))
-				System.out.println(a);
+			System.out.println("\npedidos na data 02/08/2024");
+			for(Pedido p : Fachada.pedidosNaData("02/08/2024"))
+				System.out.println(p);
 
 
-			System.out.println("\nalugueis finalizados");
-			for(Pedido a : Fachada.alugueisFinalizados())
-				System.out.println(a);
+			System.out.println("\nquentinhas do cliente Lucas");
+			for(Quentinha q : Fachada.quentinhasDoCliente("Lucas"))
+				System.out.println(q);
 
 
-			System.out.println("\ncarros que possuem 1 alugueis");
-			for(Quentinha c : Fachada.carrosNAlugueis(1))
+			System.out.println("\nclientes com mais de 2 pedidos");
+			for(Cliente c : Fachada.clientesMaisDeNPedidos(2))
 				System.out.println(c);
-
-
-			//System.out.println("clientes que possuem 2 alugueis");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

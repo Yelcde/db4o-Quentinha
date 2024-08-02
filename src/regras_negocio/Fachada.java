@@ -19,9 +19,7 @@ import modelo.Cliente;
 public class Fachada {
 	private static DAOQuentinha daoquentinha= new DAOQuentinha();  
 	private static DAOPedido daopedido= new DAOPedido(); 
-	private static DAOCliente daocliente = new DAOCliente(); 
-	//	private static DAOUsuario daousuario = new DAOUsuario(); 
-	//	public static Usuario logado;	//contem o objeto Usuario logado em TelaLogin.java
+	private static DAOCliente daocliente = new DAOCliente();
 
 	private Fachada() {}
 	
@@ -34,6 +32,10 @@ public class Fachada {
 	}
 
 	//------------------ CRUD Quentinha --------------------------
+	
+	public static Quentinha localizarQuentinha(String descricao) {
+		return daoquentinha.read(descricao);
+	}
 	
 	public static Quentinha cadastrarQuentinha(String descricao, double preco) throws Exception {
 		DAO.begin();
@@ -134,6 +136,10 @@ public class Fachada {
 		return cliente;
 	}
 	
+	public static Cliente localizarCliente(String nome) {
+		return daocliente.read(nome);
+	}
+	
 	public static List<Cliente> listarClientes() {
 		List<Cliente> clientes =  daocliente.readAll();
 		
@@ -217,6 +223,8 @@ public class Fachada {
 		
 		double valorPago = quentinha.getPreco();
 		String perfil = cliente.getPerfil();
+		
+		
 		
 		if (perfil.equalsIgnoreCase("ouro")) {
 			valorPago = quentinha.getPreco() - (quentinha.getPreco() * 0.25);
@@ -303,25 +311,25 @@ public class Fachada {
 		DAO.commit();
 	}
 	
-	//------------------Usuario------------------------------------
+	//------------------ Consultas ------------------------------------
+	
+	public static List<Pedido> pedidosNaData(String data) {
+		List<Pedido> pedidos =  daopedido.readPedidosNaData(data);
+		
+		return pedidos;
+	}
+	
+	public static List<Quentinha> quentinhasDoCliente(String nome) {
+		List<Quentinha> quentinhas =  daoquentinha.readQuentinhasDeCliente(nome);
+		
+		return quentinhas;
+	}
+	
+	public static List<Cliente> clientesMaisDeNPedidos(int n) {
+		List<Cliente> clientes = daocliente.readNPedidos(n);
+		
+		return clientes;
+	}
 
-//	public static Usuario cadastrarUsuario(String nome, String senha) throws Exception{
-//		DAO.begin();
-//		Usuario usu = daousuario.read(nome);
-//		if (usu!=null)
-//			throw new Exception("Usuario ja cadastrado:" + nome);
-//		usu = new Usuario(nome, senha);
-//
-//		daousuario.create(usu);
-//		DAO.commit();
-//		return usu;
-//	}
-//	public static Usuario localizarUsuario(String nome, String senha) {
-//		Usuario usu = daousuario.read(nome);
-//		if (usu==null)
-//			return null;
-//		if (! usu.getSenha().equals(senha))
-//			return null;
-//		return usu;
-//	}
+//	
 }

@@ -7,6 +7,7 @@
 package appswing;
 
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,17 +53,17 @@ public class TelaCliente {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					new TelaCliente();
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					new TelaCliente();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the application.
@@ -134,10 +135,10 @@ public class TelaCliente {
 		label_4.setBounds(21, 190, 431, 14);
 		frame.getContentPane().add(label_4);
 
-		label_2 = new JLabel("cpf:");
+		label_2 = new JLabel("telefone:");
 		label_2.setHorizontalAlignment(SwingConstants.LEFT);
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		label_2.setBounds(21, 269, 71, 14);
+		label_2.setBounds(9, 269, 71, 14);
 		frame.getContentPane().add(label_2);
 
 		textField = new JTextField();
@@ -154,9 +155,9 @@ public class TelaCliente {
 						label.setText("campo vazio");
 						return;
 					}
-					String cpf = textField.getText();
+					String telefone = textField.getText();
 					String nome = textField_1.getText();
-					Fachada.cadastrarCliente(nome, cpf);
+					Fachada.cadastrarCliente(nome, telefone);
 					label.setText("cliente criado: "+ nome);
 					listagem();
 				}
@@ -197,8 +198,8 @@ public class TelaCliente {
 				try{
 					if (table.getSelectedRow() >= 0){	
 						label.setText("nao implementado " );
-						String cpf = (String) table.getValueAt( table.getSelectedRow(), 0);
-						Fachada.excluirCliente(cpf);
+						String nome = (String) table.getValueAt( table.getSelectedRow(), 0);
+						Fachada.excluirCliente(nome);
 						label.setText("cliente apagado" );
 						listagem();
 					}
@@ -214,24 +215,24 @@ public class TelaCliente {
 		button_2.setBounds(281, 213, 171, 23);
 		frame.getContentPane().add(button_2);
 
-		button_3 = new JButton("exibir alugueis");
+		button_3 = new JButton("exibir pedidos");
 		button_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					if (table.getSelectedRow() >= 0){	
-						String cpf = (String) table.getValueAt( table.getSelectedRow(), 0);
-						Cliente cliente = Fachada.localizarCliente(cpf);
+						String nome = (String) table.getValueAt( table.getSelectedRow(), 0);
+						Cliente cliente = Fachada.localizarCliente(nome);
 
 						if(cliente !=  null) {
 							String texto="";
-							if(cliente.getAlugueis().isEmpty())
-								texto = "nao possui alugueis";
+							if(cliente.getPedidos().isEmpty())
+								texto = "nao possui pedidos";
 							else
-								for (Pedido a : cliente.getAlugueis()) 
-									texto = texto + a.getDatainicio()+ "-" + a.getDatafim() + "-" +a.getCarro().getPlaca()+ "\n";
+								for (Pedido a : cliente.getPedidos()) 
+									texto = texto + a.getQuentinha().getDescricao()+ "-" + a.getValorPago() + "-" +a.getTamanho()+ "-" + a.getData() +"\n";
 
-							JOptionPane.showMessageDialog(frame, texto, "alugueis", 1);
+							JOptionPane.showMessageDialog(frame, texto, "pedidos", 1);
 						}
 					}
 				}
@@ -247,17 +248,18 @@ public class TelaCliente {
 	public void listagem() {
 		try{
 			List<Cliente> lista = Fachada.listarClientes();
+			System.out.println(lista);
 
 			// model armazena todas as linhas e colunas do table
 			DefaultTableModel model = new DefaultTableModel();
 
 			//adicionar colunas no model
-			model.addColumn("cpf");
 			model.addColumn("nome");
+			model.addColumn("telefone");
 
 			//adicionar linhas no model
 			for(Cliente cli : lista) {
-				model.addRow(new Object[]{cli.getCpf(), cli.getNome()} );
+				model.addRow(new Object[]{cli.getNome(), cli.getTelefone()} );
 			}
 
 			//atualizar model no table (visualizacao)

@@ -7,6 +7,7 @@
 package appswing;
 
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,7 +33,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.Pedido;
 import regras_negocio.Fachada;
 
-public class TelaAluguel {
+public class TelaPedidos {
 	private JDialog frame;
 	private JTable table;
 	private JScrollPane scrollPane;
@@ -51,27 +52,26 @@ public class TelaAluguel {
 	private JLabel label_4;
 	private JLabel label_5;
 	private JLabel label_6;
-	private JButton button_3;
 
 	/**
 	 * Launch the application.
 	 */
-	//	public static void main(String[] args) {
-	//		EventQueue.invokeLater(new Runnable() {
-	//			public void run() {
-	//				try {
-	//					TelaAluguel tela = new TelaAluguel();
-	//				} catch (Exception e) {
-	//					e.printStackTrace();
-	//				}
-	//			}
-	//		});
-	//	}
+		public static void main(String[] args) {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						TelaPedidos tela = new TelaPedidos();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
 
 	/**
 	 * Create the application.
 	 */
-	public TelaAluguel() {
+	public TelaPedidos() {
 		initialize();
 		frame.setVisible(true);
 	}
@@ -83,7 +83,7 @@ public class TelaAluguel {
 		frame = new JDialog();
 		frame.setModal(true);
 		frame.setResizable(false);
-		frame.setTitle("Aluguel");
+		frame.setTitle("Pedidos");
 		frame.setBounds(100, 100, 729, 419);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -138,7 +138,7 @@ public class TelaAluguel {
 		label_6.setBounds(21, 190, 431, 14);
 		frame.getContentPane().add(label_6);
 
-		label_1 = new JLabel("Data de In\u00EDcio:");
+		label_1 = new JLabel("Nome Cliente:");
 		label_1.setHorizontalAlignment(SwingConstants.LEFT);
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		label_1.setBounds(12, 269, 89, 14);
@@ -150,7 +150,7 @@ public class TelaAluguel {
 		textField.setBounds(103, 266, 195, 20);
 		frame.getContentPane().add(textField);
 
-		button_1 = new JButton("Criar novo aluguel");
+		button_1 = new JButton("Criar novo pedido");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -159,14 +159,13 @@ public class TelaAluguel {
 						label.setText("campo vazio");
 						return;
 					}
-					String dataInicio = textField.getText();
-					String dataFim = textField_1.getText();
-					String placa = textField_2.getText();
-					String cpf = textField_3.getText();
-					double diaria = Double.parseDouble(textField_4.getText());
+					String nomeCli = textField.getText();
+					String quentinhaDescricao = textField_1.getText();
+					String tamanho = textField_2.getText();
+					String data = textField_3.getText();
 
-					Fachada.alugarCarro(cpf, placa, diaria, dataInicio, dataFim);
-					label.setText("aluguel criado");
+					Fachada.cadastrarPedido(nomeCli, quentinhaDescricao, tamanho, data);
+					label.setText("pedido criado");
 					listagem();
 				} catch (Exception ex) {
 					label.setText(ex.getMessage());
@@ -187,7 +186,7 @@ public class TelaAluguel {
 		button.setBounds(308, 11, 89, 23);
 		frame.getContentPane().add(button);
 
-		label_2 = new JLabel("Data fim aluguel");
+		label_2 = new JLabel("Descricao quentinha");
 		label_2.setHorizontalAlignment(SwingConstants.LEFT);
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		label_2.setBounds(310, 269, 101, 14);
@@ -204,10 +203,10 @@ public class TelaAluguel {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (table.getSelectedRow() >= 0) {
-						int idAluguel = (int) table.getValueAt(table.getSelectedRow(), 0);
+						int id = (int) table.getValueAt(table.getSelectedRow(), 0);
 
-						Fachada.excluirAluguel(idAluguel);
-						label.setText("aluguel apagado");
+						Fachada.excluirPedido(id);
+						label.setText("pedido apagado");
 						listagem();
 
 					} else
@@ -230,12 +229,12 @@ public class TelaAluguel {
 		textPane.setBounds(47, 308, 1, 16);
 		frame.getContentPane().add(textPane);
 
-		label_3 = new JLabel("Placa do carro");
+		label_3 = new JLabel("Tamanho");
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		label_3.setBounds(12, 295, 89, 16);
 		frame.getContentPane().add(label_3);
 
-		label_4 = new JLabel("CPF do cliente");
+		label_4 = new JLabel("Data");
 		label_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		label_4.setBounds(253, 297, 116, 16);
 		frame.getContentPane().add(label_4);
@@ -244,36 +243,6 @@ public class TelaAluguel {
 		textField_3.setBounds(345, 294, 130, 20);
 		frame.getContentPane().add(textField_3);
 		textField_3.setColumns(10);
-
-		textField_4 = new JTextField();
-		textField_4.setFont(new Font("Dialog", Font.PLAIN, 12));
-		textField_4.setColumns(10);
-		textField_4.setBounds(541, 296, 73, 20);
-		frame.getContentPane().add(textField_4);
-
-		label_5 = new JLabel("diaria");
-		label_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		label_5.setBounds(498, 298, 52, 16);
-		frame.getContentPane().add(label_5);
-
-		button_3 = new JButton("devolver carro");
-		button_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					if (table.getSelectedRow() >= 0) {
-						String placa = (String) table.getValueAt(table.getSelectedRow(), 2); // coluna 2
-						Fachada.devolverCarro(placa);
-						label.setText("carro devolvido");
-						listagem();
-					}
-				} catch (Exception ex) {
-					label.setText(ex.getMessage());
-				}
-			}
-		});
-		button_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button_3.setBounds(411, 215, 171, 23);
-		frame.getContentPane().add(button_3);
 		
 		frame.setVisible(true);
 	}
@@ -281,25 +250,23 @@ public class TelaAluguel {
 	public void listagem() {
 		try {
 			// ler os carros do banco
-			List<Pedido> lista = Fachada.listarAlugueis();
+			List<Pedido> lista = Fachada.listarPedidos();
 
 			// o model armazena todas as linhas e colunas do table
 			DefaultTableModel model = new DefaultTableModel();
 
 			// adicionar colunas no model
 			model.addColumn("id");
-			model.addColumn("nome");
-			model.addColumn("placa");
-			model.addColumn("data inicial");
-			model.addColumn("data final");
-			model.addColumn("total a pagar");
-			model.addColumn("finalizado");
+			model.addColumn("nome cliente");
+			model.addColumn("descricao quentinha");
+			model.addColumn("tamanho");
+			model.addColumn("data");
 
 			// adicionar linhas no model
-			for (Pedido aluguel : lista) {
-				model.addRow(new Object[] { aluguel.getId(), aluguel.getCliente().getNome(),
-						aluguel.getCarro().getPlaca(), aluguel.getDatainicio(), aluguel.getDatafim(),
-						aluguel.getValor(), aluguel.isFinalizado() });
+			for (Pedido p : lista) {
+				model.addRow(new Object[] { p.getId(),
+						p.getCliente().getNome(), p.getQuentinha().getDescricao(), p.getTamanho(),
+						p.getData() });
 			}
 
 			// atualizar model no table (visualizacao)

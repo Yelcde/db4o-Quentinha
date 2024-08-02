@@ -48,6 +48,14 @@ public class Cliente {
 	}
 	
 	public void adicionar(Pedido a) {
+		if (pedidos.size() == 2) {
+			perfil = "Bronze";
+		} else if (pedidos.size() == 4) {
+			perfil = "Prata";
+		} else if (pedidos.size() > 4) {
+			perfil = "Ouro";
+		}
+		
 		pedidos.add(a);	
 	}
 

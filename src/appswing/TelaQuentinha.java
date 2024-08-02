@@ -7,6 +7,7 @@
 package appswing;
 
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,7 +34,7 @@ import modelo.Pedido;
 import modelo.Quentinha;
 import regras_negocio.Fachada;
 
-public class TelaCarro {
+public class TelaQuentinha{
 	private JDialog frame;
 	private JTable table;
 	private JScrollPane scrollPane;
@@ -52,22 +53,22 @@ public class TelaCarro {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					TelaCarro tela = new TelaCarro();
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					TelaQuentinha tela = new TelaQuentinha();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the application.
 	 */
-	public TelaCarro() {
+	public TelaQuentinha() {
 		initialize();
 		frame.setVisible(true);
 	}
@@ -80,7 +81,7 @@ public class TelaCarro {
 		frame.setModal(true);
 
 		frame.setResizable(false);
-		frame.setTitle("Carro");
+		frame.setTitle("Quentinha");
 		frame.setBounds(100, 100, 729, 385);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -134,7 +135,7 @@ public class TelaCarro {
 		label_4.setBounds(21, 190, 431, 14);
 		frame.getContentPane().add(label_4);
 
-		label_2 = new JLabel("placa:");
+		label_2 = new JLabel("descricao:");
 		label_2.setHorizontalAlignment(SwingConstants.LEFT);
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		label_2.setBounds(21, 269, 71, 14);
@@ -146,7 +147,7 @@ public class TelaCarro {
 		textField.setBounds(68, 264, 195, 20);
 		frame.getContentPane().add(textField);
 
-		button_1 = new JButton("Criar novo carro");
+		button_1 = new JButton("Criar nova quentinha");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -154,10 +155,10 @@ public class TelaCarro {
 						label.setText("campo vazio");
 						return;
 					}
-					String placa = textField.getText();
-					String modelo = textField_1.getText();
-					Fachada.cadastrarCarro(placa, modelo);
-					label.setText("carro criado: "+ placa);
+					String descricao = textField.getText();
+					String preco = textField_1.getText();
+					Fachada.cadastrarQuentinha(descricao, Double.parseDouble(preco));
+					label.setText("quentinha criada: "+ descricao);
 					listagem();
 				}
 				catch(Exception ex) {
@@ -179,7 +180,7 @@ public class TelaCarro {
 		button.setBounds(308, 11, 89, 23);
 		frame.getContentPane().add(button);
 
-		label_3 = new JLabel("modelo:");
+		label_3 = new JLabel("preco:");
 		label_3.setHorizontalAlignment(SwingConstants.LEFT);
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		label_3.setBounds(281, 269, 63, 14);
@@ -197,10 +198,10 @@ public class TelaCarro {
 				try{
 					if (table.getSelectedRow() >= 0){	
 						label.setText("nao implementado " );
-						String placa = (String) table.getValueAt( table.getSelectedRow(), 0);
+						String descricao = (String) table.getValueAt( table.getSelectedRow(), 0);
 
-						Fachada.excluirCarro(placa);
-						label.setText("carro apagado" );
+						Fachada.excluirQuentinha(descricao);
+						label.setText("quentinha apagada" );
 						listagem();
 					}
 					else
@@ -215,22 +216,22 @@ public class TelaCarro {
 		button_2.setBounds(281, 213, 171, 23);
 		frame.getContentPane().add(button_2);
 
-		button_3 = new JButton("exibir alugueis");
+		button_3 = new JButton("exibir pedidos");
 		button_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					if (table.getSelectedRow() >= 0){	
-						String placa = (String) table.getValueAt( table.getSelectedRow(), 0);
-						Quentinha car = Fachada.localizarCarro(placa);
+						String descricao = (String) table.getValueAt( table.getSelectedRow(), 0);
+						Quentinha quentinha = Fachada.localizarQuentinha(descricao);
 
-						if(car != null) {
+						if(quentinha != null) {
 							String texto="";
-							if(car.getAlugueis().isEmpty())
-								texto = "nao possui alugueis";
+							if(quentinha.getPedidos().isEmpty())
+								texto = "nao possui pedidos";
 							else
-								for (Pedido a : car.getAlugueis()) {
-									texto = texto + a.getDatainicio()+ "-" + a.getDatafim() + "-" +a.getCliente().getNome()+ "\n";
+								for (Pedido a : quentinha.getPedidos()) {
+									texto = texto + a.getCliente().getNome()+ "-" + a.getData() + "-" +a.getTamanho()+ "\n";
 								}
 
 							JOptionPane.showMessageDialog(frame, texto, "alugueis", 1);
@@ -248,18 +249,17 @@ public class TelaCarro {
 
 	public void listagem() {
 		try{
-			List<Quentinha> lista = Fachada.listarCarros();
+			List<Quentinha> lista = Fachada.listarQuentinhas();
 			// model armazena todas as linhas e colunas do table
 			DefaultTableModel model = new DefaultTableModel();
 
 			//adicionar colunas no model
-			model.addColumn("placa");
-			model.addColumn("modelo");
-			model.addColumn("alugado");
+			model.addColumn("descricao");
+			model.addColumn("preco");
 
 			//adicionar linhas no model
-			for(Quentinha car : lista) {
-				model.addRow(new Object[]{car.getPlaca(), car.getModelo(), car.isAlugado()} );
+			for(Quentinha quentinha : lista) {
+				model.addRow(new Object[]{quentinha.getDescricao(), quentinha.getPreco()} );
 			}
 
 			//atualizar model no table (visualizacao)

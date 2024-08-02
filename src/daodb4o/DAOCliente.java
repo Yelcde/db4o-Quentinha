@@ -7,6 +7,9 @@
 package daodb4o;
 
 import java.util.List;
+
+import com.db4o.query.Candidate;
+import com.db4o.query.Evaluation;
 import com.db4o.query.Query;
 import modelo.Cliente;
 
@@ -31,10 +34,27 @@ public class DAOCliente extends DAO<Cliente> {
     public List<Cliente> readNPedidos(int numPedidos) {
         Query query = manager.query();
         query.constrain(Cliente.class);
-        query.descend("pedidos").descend("size").constrain(numPedidos).greater();
+        query.constrain(new FiltroPedidos(numPedidos));
 		List<Cliente> clientes = query.execute();
 
 		return clientes;
+    }
+}
+
+class FiltroPedidos implements Evaluation {
+    private int numPedidos;
+
+    public FiltroPedidos(int numPedidos) {
+        this.numPedidos = numPedidos;
+    }
+
+    @Override
+    public void evaluate(Candidate candidate) {
+        Cliente cliente = (Cliente) candidate.getObject();
+        if (cliente.getPedidos().size() > this.numPedidos)
+        	candidate.include(true);
+        else
+        	candidate.include(false);
     }
 }
 

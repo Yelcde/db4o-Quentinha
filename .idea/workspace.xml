@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3299a1d-d2fa-4092-9f75-e1e035ce5a8d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/appconsole/Cadastrar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/appconsole/Cadastrar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/daodb4o/DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/daodb4o/DAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/daodb4o/DAOCliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/daodb4o/DAOCliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modelo/Pedido.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/modelo/Pedido.java" afterDir="false" />
-    </list>
+    <list default="true" id="a3299a1d-d2fa-4092-9f75-e1e035ce5a8d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

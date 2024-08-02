@@ -7,6 +7,7 @@
 package appswing;
 
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +28,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import modelo.Cliente;
 import modelo.Pedido;
 import modelo.Quentinha;
 import regras_negocio.Fachada;
@@ -44,17 +46,17 @@ public class TelaConsulta {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					new TelaConsulta();
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					new TelaConsulta();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the application.
@@ -130,19 +132,20 @@ public class TelaConsulta {
 					label_4.setText("");
 					switch(index) {
 					case 0: 
-						List<Pedido> resultado1 = Fachada.alugueisFinalizados();
-						listagemAluguel(resultado1);
+						String data = JOptionPane.showInputDialog("digite a data");
+						List<Pedido> resultado1 = Fachada.pedidosNaData(data);
+						listagemPedidos(resultado1);
 						break;
 					case 1: 
-						String modelo = JOptionPane.showInputDialog("digite o modelo");
-						List<Pedido> resultado2 = Fachada.alugueisModelo(modelo);
-						listagemAluguel(resultado2);
+						String cliente = JOptionPane.showInputDialog("digite o nome do cliente");
+						List<Quentinha> resultado2 = Fachada.quentinhasDoCliente(cliente);
+						listagemQuentinha(resultado2);
 						break;
 					case 2: 
 						String n = JOptionPane.showInputDialog("digite N");
 						int numero = Integer.parseInt(n);
-						List<Quentinha> resultado3 = Fachada.carrosNAlugueis(numero);
-						listagemCarro(resultado3);
+						List<Cliente> resultado3 = Fachada.clientesMaisDeNPedidos(numero);
+						listagemClientes(resultado3);
 						break;
 
 					}
@@ -155,28 +158,28 @@ public class TelaConsulta {
 
 		comboBox = new JComboBox<String>();
 		comboBox.setToolTipText("selecione a consulta");
-		comboBox.setModel(new DefaultComboBoxModel<>(new String[] {"alugueis finalizados", "alugueis de um determinado modelo de carro", "carros que possuem N alugueis"}));
+		comboBox.setModel(new DefaultComboBoxModel<>(new String[] {"pedidos na data X", "quentinha de cliente X", "clientes que possuem N pedidos"}));
 		comboBox.setBounds(21, 10, 513, 22);
 		frame.getContentPane().add(comboBox);
 	}
 
-	public void listagemAluguel(List<Pedido> lista) {
+	public void listagemPedidos(List<Pedido> lista) {
 		try{
 			// o model armazena todas as linhas e colunas do table
 			DefaultTableModel model = new DefaultTableModel();
 
 			//adicionar colunas no model
 			model.addColumn("id");
-			model.addColumn("nome");
-			model.addColumn("placa");
-			model.addColumn("data inicial");
-			model.addColumn("data final");
-			model.addColumn("total a pagar");
-			model.addColumn("finalizado");
+			model.addColumn("nome cliente");
+			model.addColumn("descricao quentinha");
+			model.addColumn("tamanho");
+			model.addColumn("data");
 
 			//adicionar linhas no model
-			for(Pedido aluguel : lista) {
-				model.addRow(new Object[]{aluguel.getId(), aluguel.getCliente().getNome(), aluguel.getCarro().getPlaca(), aluguel.getDatainicio(), aluguel.getDatafim(), aluguel.getValor(), aluguel.isFinalizado()});
+			for (Pedido p : lista) {
+				model.addRow(new Object[] { p.getId(),
+						p.getCliente().getNome(), p.getQuentinha().getDescricao(), p.getTamanho(),
+						p.getData() });
 			}
 			//atualizar model no table (visualizacao)
 			table.setModel(model);
@@ -188,19 +191,41 @@ public class TelaConsulta {
 		}
 	}
 	
-	public void listagemCarro(List<Quentinha> lista) {
+	public void listagemQuentinha(List<Quentinha> lista) {
 		try{
 			// model armazena todas as linhas e colunas do table
 			DefaultTableModel model = new DefaultTableModel();
 
 			//adicionar colunas no model
-			model.addColumn("placa");
-			model.addColumn("modelo");
-			model.addColumn("alugado");
+			model.addColumn("descricao");
+			model.addColumn("preco");
 
 			//adicionar linhas no model
-			for(Quentinha car : lista) {
-				model.addRow(new Object[]{car.getPlaca(), car.getModelo(), car.isAlugado()} );
+			for(Quentinha quentinha : lista) {
+				model.addRow(new Object[]{quentinha.getDescricao(), quentinha.getPreco()} );
+			}
+			//atualizar model no table (visualizacao)
+			table.setModel(model);
+
+			label_4.setText("resultados: "+lista.size()+ " objetos");
+		}
+		catch(Exception erro){
+			label.setText(erro.getMessage());
+		}
+	}
+	
+	public void listagemClientes(List<Cliente> lista) {
+		try{
+			// model armazena todas as linhas e colunas do table
+			DefaultTableModel model = new DefaultTableModel();
+
+			//adicionar colunas no model
+			model.addColumn("nome");
+			model.addColumn("telefone");
+
+			//adicionar linhas no model
+			for(Cliente cli : lista) {
+				model.addRow(new Object[]{cli.getNome(), cli.getTelefone()} );
 			}
 			//atualizar model no table (visualizacao)
 			table.setModel(model);

@@ -33,9 +33,12 @@ public class Cadastrar {
         
         try {
         	System.out.println("cadastrando pedido...");
-            Fachada.cadastrarPedido("Lucas", "Macarrão com frango", "P", "06/07/2024");
-            Fachada.cadastrarPedido("Lucas", "Macarrão com frango", "G", "07/07/2024");
+            Fachada.cadastrarPedido("Lucas", "Macarrão com frango", "P", "02/08/2024");
+            Fachada.cadastrarPedido("Lucas", "Macarrão com frango", "G", "02/08/2024");
+            Fachada.cadastrarPedido("Lucas", "Macarrão com frango", "G", "01/08/2024");
             Fachada.cadastrarPedido("Jessye", "Arroz, feijao e carne", "P", "07/07/2024");
+            Fachada.cadastrarPedido("Jessye", "Macarrão com frango", "G", "02/08/2024");
+            Fachada.cadastrarPedido("Johnner", "Lasanha", "G", "18/07/2024");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
