@@ -4,7 +4,7 @@
  * Prof. Fausto Ayres
  **********************************/
 
-package daodb4o;
+package daojpa;
 
 import java.util.List;
 

@@ -8,10 +8,11 @@
 package regras_negocio;
 
 import java.util.List;
-import daodb4o.DAO;
-import daodb4o.DAOPedido;
-import daodb4o.DAOQuentinha;
-import daodb4o.DAOCliente;
+
+import daojpa.DAO;
+import daojpa.DAOCliente;
+import daojpa.DAOPedido;
+import daojpa.DAOQuentinha;
 import modelo.Pedido;
 import modelo.Quentinha;
 import modelo.Cliente;
