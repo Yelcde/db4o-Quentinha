@@ -2,10 +2,24 @@ package modelo;
 
 import java.util.ArrayList;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+@Entity
 public class Quentinha {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
+
 	private String descricao;
+
 	private double preco;
+
+	@OneToMany(mappedBy = "quentinha", cascade = CascadeType.ALL)
 	ArrayList<Pedido> pedidos = new ArrayList<>();
 
 	public Quentinha(String descricao, double preco) {

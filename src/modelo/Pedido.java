@@ -1,14 +1,32 @@
 package modelo;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
+@Entity
 public class Pedido {
-	private int id;			//autogerado no daopedido
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private int id;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Cliente cliente;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Quentinha quentinha;
+	
 	private String tamanho;
+	
 	private String data;
+
 	private double valorPago;
 
-	public Pedido() {}
+	public Pedido() {
+	}
 
 	public Pedido(Cliente cliente, Quentinha quentinha, String tamanho, String data) {
 		super();
@@ -68,7 +86,7 @@ public class Pedido {
 
 	@Override
 	public String toString() {
-		return "Pedido [id=" + id + ", cliente=" + cliente.getNome() + ", quentinha=" + quentinha.getDescricao() + ", tamanho=" + tamanho
-				+ ", data=" + data + ", valorPago=" + valorPago + "]";
+		return "Pedido [id=" + id + ", cliente=" + cliente.getNome() + ", quentinha=" + quentinha.getDescricao()
+				+ ", tamanho=" + tamanho + ", data=" + data + ", valorPago=" + valorPago + "]";
 	}
 }

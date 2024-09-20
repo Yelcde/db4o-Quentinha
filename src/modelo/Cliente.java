@@ -2,18 +2,31 @@ package modelo;
 
 import java.util.ArrayList;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+@Entity
 public class Cliente {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private Long id;
 	private String nome;
 	private String telefone;
 	private String perfil = "Nenhum";
-	private ArrayList <Pedido> pedidos = new ArrayList<>();
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private ArrayList<Pedido> pedidos = new ArrayList<>();
 
 	public Cliente(String nome, String telefone) {
 		this.nome = nome;
 		this.telefone = telefone;
 	}
 
-	public Cliente() {}
+	public Cliente() {
+	}
 
 	public String getNome() {
 		return nome;
@@ -46,7 +59,7 @@ public class Cliente {
 	public void setPedidos(ArrayList<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
-	
+
 	public void adicionar(Pedido a) {
 		if (pedidos.size() == 2) {
 			perfil = "Bronze";
@@ -55,8 +68,8 @@ public class Cliente {
 		} else if (pedidos.size() > 4) {
 			perfil = "Ouro";
 		}
-		
-		pedidos.add(a);	
+
+		pedidos.add(a);
 	}
 
 	public void remover(Pedido a) {
