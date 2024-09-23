@@ -12,5 +12,4 @@ public interface DAOInterface<T> {
 	public T update(T obj);
 	public void delete(T obj) ;
 	public List<T> readAll();
-	public void deleteAll();
 }

@@ -1,46 +1,37 @@
-/**********************************
- * IFPB - SI
- * POB - Persistencia de Objetos
- * Prof. Fausto Ayres
- **********************************/
-
 package daojpa;
 
 import java.util.List;
-import com.db4o.query.Query;
+
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 import modelo.Pedido;
 
 public class DAOPedido extends DAO<Pedido> {
-	public Pedido read (Object chave) {
-		int id = (int) chave;
-		
-		Query q = manager.query();
-		q.constrain(Pedido.class);
-		q.descend("id").constrain(id);
-		List<Pedido> resultados = q.execute();
-		
-		if (resultados.size()>0) return resultados.get(0);
 
-		return null;
+	public Pedido read(Object chave) {
+		try {
+			int id = (int) chave; // casting para o tipo da chave
+			TypedQuery<Pedido> query = manager.createQuery("select p from Pedido p where p.id = :x", Pedido.class);
+			query.setParameter("x", id);
+
+			return query.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
-	// metodo sobrescrito da classe DAO para criar "id" sequencial 
-	public void create(Pedido obj) {
-		int novoid = super.gerarId();  	//gerar novo id da classe
-		obj.setId(novoid);				//atualizar id do objeto antes de grava-lo no banco
-		manager.store(obj);
-	}
-	
-    //--------------------------------------------
-    //  consultas
-    //--------------------------------------------
-	
+	// --------------------------------------------
+	// consultas
+	// --------------------------------------------
+
 	public List<Pedido> readPedidosNaData(String data) {
-		Query query = manager.query();
-		query.constrain(Pedido.class);
-		query.descend("data").constrain(data);
-		List<Pedido> pedidos = query.execute();
-		
-		return pedidos;
+		try {
+			TypedQuery<Pedido> query = manager.createQuery("select p from Pedido p where p.data = :d", Pedido.class);
+			query.setParameter("d", data);
+
+			return query.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 }

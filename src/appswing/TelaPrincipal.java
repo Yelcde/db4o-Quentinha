@@ -1,9 +1,4 @@
 package appswing;
-/**********************************
- * IFPB - Curso Superior de Tec. em Sist. para Internet
- * POO
- * Prof. Fausto Maranh�o Ayres
- **********************************/
 
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -18,8 +13,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.SwingConstants;
 
-import regras_negocio.Fachada;
-
 public class TelaPrincipal {
 	private JFrame frame;
 	private JMenu mnQuentinha;
@@ -27,8 +20,6 @@ public class TelaPrincipal {
 	private JMenu mnPedido;
 	private JMenu mnConsulta;
 	private JLabel label;
-
-
 
 	/**
 	 * Launch the application.
@@ -70,9 +61,10 @@ public class TelaPrincipal {
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setText("Inicializando...");
 		label.setBounds(0, 0, 467, 302);
-		//label.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		// label.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 		ImageIcon imagem = new ImageIcon(getClass().getResource("/arquivos/imagem.jpg"));
-		imagem = new ImageIcon(imagem.getImage().getScaledInstance(label.getWidth(),label.getHeight(), Image.SCALE_DEFAULT));//		label.setIcon(fotos);
+		imagem = new ImageIcon(
+				imagem.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));// label.setIcon(fotos);
 		label.setIcon(imagem);
 		frame.getContentPane().add(label);
 		frame.setResizable(false);
@@ -83,7 +75,7 @@ public class TelaPrincipal {
 		mnQuentinha.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				 new TelaQuentinha();
+				new TelaQuentinha();
 			}
 		});
 		menuBar.add(mnQuentinha);
@@ -92,11 +84,11 @@ public class TelaPrincipal {
 		mnCliente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				 new TelaCliente();
+				new TelaCliente();
 			}
 		});
 		menuBar.add(mnCliente);
-		
+
 		mnPedido = new JMenu("Pedidos");
 		mnPedido.addMouseListener(new MouseAdapter() {
 			@Override
@@ -105,7 +97,7 @@ public class TelaPrincipal {
 			}
 		});
 		menuBar.add(mnPedido);
-		
+
 		mnConsulta = new JMenu("Consultas");
 		mnConsulta.addMouseListener(new MouseAdapter() {
 			@Override

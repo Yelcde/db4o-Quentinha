@@ -57,15 +57,15 @@ public class TelaPedidos {
 	 * Launch the application.
 	 */
 		public static void main(String[] args) {
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						TelaPedidos tela = new TelaPedidos();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
+//			EventQueue.invokeLater(new Runnable() {
+//				public void run() {
+//					try {
+//						TelaPedidos tela = new TelaPedidos();
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			});
 		}
 
 	/**

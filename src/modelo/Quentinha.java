@@ -1,6 +1,7 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -8,19 +9,21 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
 
 @Entity
 public class Quentinha {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "quentinha_seq")
+	@SequenceGenerator(name = "quentinha_seq", sequenceName = "quentinha_seq", allocationSize = 1)
 	private int id;
 
 	private String descricao;
 
 	private double preco;
 
-	@OneToMany(mappedBy = "quentinha", cascade = CascadeType.ALL)
-	ArrayList<Pedido> pedidos = new ArrayList<>();
+	@OneToMany(mappedBy = "quentinha", cascade = CascadeType.REFRESH)
+	List<Pedido> pedidos = new ArrayList<>();
 
 	public Quentinha(String descricao, double preco) {
 		this.descricao = descricao;
@@ -54,11 +57,11 @@ public class Quentinha {
 		this.preco = preco;
 	}
 
-	public ArrayList<Pedido> getPedidos() {
+	public List<Pedido> getPedidos() {
 		return pedidos;
 	}
 
-	public void setPedidos(ArrayList<Pedido> pedidos) {
+	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
 

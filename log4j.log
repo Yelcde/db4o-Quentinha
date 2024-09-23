@@ -1,0 +1,30 @@
+23:37:47,797  INFO Util:28 - ----conectar banco - lendo arquivo de propriedades 
+23:37:47,803  INFO Util:33 - sgbd => postgresql
+23:37:47,805  INFO Util:34 - banco => quentinha
+23:37:47,806  INFO Util:35 - ip => localhost
+23:37:47,806  INFO Util:39 - ----configurando postgresql
+23:37:47,900 DEBUG logging:38 - Logging Provider: org.jboss.logging.Log4jLoggerProvider
+23:37:48,139  INFO LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: hibernate-postgresql]
+23:37:48,237  INFO Version:44 - HHH000412: Hibernate ORM core version 6.5.2.Final
+23:37:48,306 DEBUG RegionFactoryInitiator:122 - Cannot default RegionFactory based on registered strategies as `[]` RegionFactory strategies were registered
+23:37:48,308  INFO RegionFactoryInitiator:50 - HHH000026: Second-level cache disabled
+23:37:48,631  WARN pooling:81 - HHH10001002: Using built-in connection pool (not intended for production use)
+23:37:48,636  INFO pooling:136 - HHH10001005: Loaded JDBC driver class: org.postgresql.Driver
+23:37:48,637  INFO pooling:158 - HHH10001012: Connecting with JDBC URL [jdbc:postgresql://localhost:5432/quentinha]
+23:37:48,637  INFO pooling:167 - HHH10001001: Connection properties: {password=****, user=postgres}
+23:37:48,637  INFO pooling:171 - HHH10001003: Autocommit mode: false
+23:37:48,640  INFO pooling:372 - HHH10001115: Connection pool size: 20 (min=1)
+23:37:50,762  INFO JtaPlatformInitiator:59 - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+23:37:50,785  INFO access:52 - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@31913fc] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+23:38:29,067  INFO Util:58 - ----desconectar banco
+23:38:29,069  INFO pooling:607 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/quentinha]
+cliente_id where c1_0.nome=?
+23:37:55,330 TRACE bind:24 - binding parameter (1:VARCHAR) <- [Lucas]
+23:37:59,586 DEBUG SQL:135 - select q1_0.id,q1_0.descricao,q1_0.preco from Quentinha q1_0 join Pedido p1_0 on q1_0.id=p1_0.quentinha_id join Cliente c1_0 on c1_0.id=p1_0.cliente_id where c1_0.nome=?
+23:37:59,590 TRACE bind:24 - binding parameter (1:VARCHAR) <- [Jessye]
+23:38:04,382 DEBUG SQL:135 - select c1_0.id,c1_0.nome,c1_0.perfil,c1_0.telefone from Cliente c1_0 where (select count(1) from Pedido p1_0 where c1_0.id=p1_0.cliente_id)=?
+23:38:04,383 TRACE bind:24 - binding parameter (1:INTEGER) <- [1]
+23:38:07,310 DEBUG SQL:135 - select c1_0.id,c1_0.nome,c1_0.perfil,c1_0.telefone from Cliente c1_0 where (select count(1) from Pedido p1_0 where c1_0.id=p1_0.cliente_id)=?
+23:38:07,312 TRACE bind:24 - binding parameter (1:INTEGER) <- [2]
+23:38:10,373  INFO Util:58 - ----desconectar banco
+23:38:10,376  INFO pooling:607 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/quentinha]

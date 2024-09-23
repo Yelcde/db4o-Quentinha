@@ -30,8 +30,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import modelo.Pedido;
 import modelo.Cliente;
+import modelo.Pedido;
 import regras_negocio.Fachada;
 
 public class TelaCliente {
@@ -79,7 +79,7 @@ public class TelaCliente {
 	private void initialize() {
 		frame = new JDialog();
 		frame.setModal(true);
-		
+
 		frame.setResizable(false);
 		frame.setTitle("Cliente");
 		frame.setBounds(100, 100, 729, 385);
@@ -91,6 +91,7 @@ public class TelaCliente {
 				Fachada.inicializar();
 				listagem();
 			}
+
 			@Override
 			public void windowClosing(WindowEvent e) {
 				Fachada.finalizar();
@@ -109,8 +110,8 @@ public class TelaCliente {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (table.getSelectedRow() >= 0) 
-					label_4.setText("selecionado="+ table.getValueAt( table.getSelectedRow(), 0));
+				if (table.getSelectedRow() >= 0)
+					label_4.setText("selecionado=" + table.getValueAt(table.getSelectedRow(), 0));
 			}
 		});
 		table.setGridColor(Color.BLACK);
@@ -126,7 +127,7 @@ public class TelaCliente {
 		table.setShowGrid(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-		label = new JLabel("");		//label de mensagem
+		label = new JLabel(""); // label de mensagem
 		label.setForeground(Color.BLUE);
 		label.setBounds(21, 321, 688, 14);
 		frame.getContentPane().add(label);
@@ -151,17 +152,16 @@ public class TelaCliente {
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if(textField.getText().isEmpty() || textField_1.getText().isEmpty()) {
+					if (textField.getText().isEmpty() || textField_1.getText().isEmpty()) {
 						label.setText("campo vazio");
 						return;
 					}
 					String telefone = textField.getText();
 					String nome = textField_1.getText();
 					Fachada.cadastrarCliente(nome, telefone);
-					label.setText("cliente criado: "+ nome);
+					label.setText("cliente criado: " + nome);
 					listagem();
-				}
-				catch(Exception ex) {
+				} catch (Exception ex) {
 					label.setText(ex.getMessage());
 				}
 			}
@@ -195,18 +195,16 @@ public class TelaCliente {
 		button_2 = new JButton("Deletar selecionado");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try{
-					if (table.getSelectedRow() >= 0){	
-						label.setText("nao implementado " );
-						String nome = (String) table.getValueAt( table.getSelectedRow(), 0);
+				try {
+					if (table.getSelectedRow() >= 0) {
+						label.setText("nao implementado ");
+						String nome = (String) table.getValueAt(table.getSelectedRow(), 0);
 						Fachada.excluirCliente(nome);
-						label.setText("cliente apagado" );
+						label.setText("cliente apagado");
 						listagem();
-					}
-					else
+					} else
 						label.setText("nao selecionado");
-				}
-				catch(Exception ex) {
+				} catch (Exception ex) {
 					label.setText(ex.getMessage());
 				}
 			}
@@ -219,24 +217,24 @@ public class TelaCliente {
 		button_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try{
-					if (table.getSelectedRow() >= 0){	
-						String nome = (String) table.getValueAt( table.getSelectedRow(), 0);
+				try {
+					if (table.getSelectedRow() >= 0) {
+						String nome = (String) table.getValueAt(table.getSelectedRow(), 0);
 						Cliente cliente = Fachada.localizarCliente(nome);
 
-						if(cliente !=  null) {
-							String texto="";
-							if(cliente.getPedidos().isEmpty())
+						if (cliente != null) {
+							String texto = "";
+							if (cliente.getPedidos().isEmpty())
 								texto = "nao possui pedidos";
 							else
-								for (Pedido a : cliente.getPedidos()) 
-									texto = texto + a.getQuentinha().getDescricao()+ "-" + a.getValorPago() + "-" +a.getTamanho()+ "-" + a.getData() +"\n";
+								for (Pedido a : cliente.getPedidos())
+									texto = texto + a.getQuentinha().getDescricao() + "-" + a.getValorPago() + "-"
+											+ a.getTamanho() + "-" + a.getData() + "\n";
 
 							JOptionPane.showMessageDialog(frame, texto, "pedidos", 1);
 						}
 					}
-				}
-				catch(Exception erro) {
+				} catch (Exception erro) {
 					label.setText(erro.getMessage());
 				}
 			}
@@ -246,28 +244,27 @@ public class TelaCliente {
 	}
 
 	public void listagem() {
-		try{
+		try {
 			List<Cliente> lista = Fachada.listarClientes();
 			System.out.println(lista);
 
 			// model armazena todas as linhas e colunas do table
 			DefaultTableModel model = new DefaultTableModel();
 
-			//adicionar colunas no model
+			// adicionar colunas no model
 			model.addColumn("nome");
 			model.addColumn("telefone");
 
-			//adicionar linhas no model
-			for(Cliente cli : lista) {
-				model.addRow(new Object[]{cli.getNome(), cli.getTelefone()} );
+			// adicionar linhas no model
+			for (Cliente cli : lista) {
+				model.addRow(new Object[] { cli.getNome(), cli.getTelefone() });
 			}
 
-			//atualizar model no table (visualizacao)
+			// atualizar model no table (visualizacao)
 			table.setModel(model);
 
-			label_4.setText("resultados: "+lista.size()+ " objetos");
-		}
-		catch(Exception erro){
+			label_4.setText("resultados: " + lista.size() + " objetos");
+		} catch (Exception erro) {
 			label.setText(erro.getMessage());
 		}
 	}

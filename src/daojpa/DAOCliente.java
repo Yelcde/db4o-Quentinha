@@ -1,60 +1,37 @@
-/**********************************
- * IFPB - SI
- * POB - Persistencia de Objetos
- * Prof. Fausto Ayres
- **********************************/
-
 package daojpa;
 
 import java.util.List;
 
-import com.db4o.query.Candidate;
-import com.db4o.query.Evaluation;
-import com.db4o.query.Query;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 import modelo.Cliente;
 
 public class DAOCliente extends DAO<Cliente> {
-    public Cliente read(Object chave) {
-        String nome = (String) chave;    // casting para o tipo da chave
+	public Cliente read(Object chave) {
+		try {
+			String nome = (String) chave; // casting para o tipo da chave
+			TypedQuery<Cliente> query = manager.createQuery("select c from Cliente c where c.nome = :n", Cliente.class);
+			query.setParameter("n", nome);
 
-        Query q = manager.query();
-        q.constrain(Cliente.class);
-        q.descend("nome").constrain(nome);
-        List<Cliente> resultados = q.execute();
+			return query.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 
-        if (resultados.size() > 0) return resultados.get(0);
+	// --------------------------------------------
+	// consultas
+	// --------------------------------------------
 
-        return null;
-    }
+	public List<Cliente> readNPedidos(int numPedidos) {
+		try {
+			TypedQuery<Cliente> query = manager.createQuery("select c from Cliente c where SIZE(c.pedidos) = :n",
+					Cliente.class);
+			query.setParameter("n", numPedidos);
 
-    //--------------------------------------------
-    //  consultas
-    //--------------------------------------------
-
-    public List<Cliente> readNPedidos(int numPedidos) {
-        Query query = manager.query();
-        query.constrain(Cliente.class);
-        query.constrain(new FiltroPedidos(numPedidos));
-		List<Cliente> clientes = query.execute();
-
-		return clientes;
-    }
+			return query.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 }
-
-class FiltroPedidos implements Evaluation {
-    private int numPedidos;
-
-    public FiltroPedidos(int numPedidos) {
-        this.numPedidos = numPedidos;
-    }
-
-    @Override
-    public void evaluate(Candidate candidate) {
-        Cliente cliente = (Cliente) candidate.getObject();
-        if (cliente.getPedidos().size() > this.numPedidos)
-        	candidate.include(true);
-        else
-        	candidate.include(false);
-    }
-}
-
